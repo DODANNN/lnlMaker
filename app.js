@@ -48,6 +48,17 @@ const overlay        = $('overlay');
 const fontSerifBtn   = $('fontSerif');
 const fontSansBtn    = $('fontSans');
 
+const bgScaleSlider = $('bgScaleSlider');
+const bgScaleValEl  = $('bgScaleVal');
+
+bgScaleSlider.addEventListener('input', () => {
+  bgScale = +bgScaleSlider.value / 100;
+  bgScaleValEl.textContent = bgScaleSlider.value + '%';
+  applyBgTransform();
+});
+bgScaleSlider.addEventListener('mousedown', e => e.stopPropagation());
+bgScaleSlider.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
+
 /* ── Font toggle ── */
 fontSerifBtn.addEventListener('click', () => {
   state.font = 'serif';
@@ -637,6 +648,11 @@ function renderShort() {
 /* ========== INTERACT.JS ========== */
 function applyBgTransform() {
   previewBg.style.transform = `translate(calc(-50% + ${bgX}px), calc(-50% + ${bgY}px)) scale(${bgScale})`;
+  /* 슬라이더 동기화 */
+  if (bgScaleSlider) {
+    bgScaleSlider.value = Math.round(bgScale * 100);
+    bgScaleValEl.textContent = Math.round(bgScale * 100) + '%';
+  }
 }
 
 interact(previewBg)
