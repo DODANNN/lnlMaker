@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+  <title>스크립트 메이커</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+  <style>
+@font-face {
+    font-family: 'GyeonggiMillenniumBackground';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'GyeonggiMillenniumBackground';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Bold.woff') format('woff');
+    font-weight: 700;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'MiceMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEMyungjo.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Header -->
+  <header class="m-header">
+    <button class="burger" id="burgerBtn" aria-label="메뉴 열기">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Help button (PC) -->
+  <button class="help-btn" id="helpBtn" title="안내 보기">?</button>
+
+  <!-- Notice Modal -->
+  <div class="notice-backdrop" id="noticeBackdrop"></div>
+  <div class="notice-modal" id="noticeModal">
+    <div class="notice-header">
+      <span class="notice-title">스크립트 메이커</span>
+      <button class="notice-close" id="noticeClose">✕</button>
+    </div>
+    <div class="notice-body">
+      <ul>
+        <li>🩵 모 미연시 덕질 하려고 만든 미연시풍 스크립트 메이커.</li>
+        <li>🩷 <b>PC 권장!</b> 하지만 이번에는 모바일도 된다. (아마도)</li>
+        <li>🩵 <b>오류, 폰트 추가, 기타 기능 추가 등등</b> — 직멘 다오.</li>
+      </ul>
+    </div>
+    <div class="notice-footer">
+      <label class="notice-skip">
+        <input type="checkbox" id="noticeDontShow" />
+        <span>오늘 하루 안 보기</span>
+      </label>
+      <button class="notice-confirm" id="noticeConfirm">확인</button>
+    </div>
+  </div>
+
+  <!-- Overlay (mobile) -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Left: Editor Panel -->
+  <aside class="editor" id="editorPanel">
+    <div class="editor-inner">
+
+      <div class="logo">스크립트 메이커</div>
+
+      <!-- 1. Background -->
+      <section class="sec">
+        <label class="sec-title">배경 이미지</label>
+        <label class="upload-btn" for="bgUpload">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          이미지 업로드
+        </label>
+        <input type="file" id="bgUpload" accept="image/*" hidden />
+        <div class="bg-name-row">
+          <span class="bg-name" id="bgName">선택된 파일 없음</span>
+          <button class="remove-btn" id="bgRemove" title="배경 제거">✕</button>
+        </div>
+        <div class="name-wrap">
+          <span class="deco-label">배경 색상</span>
+          <div class="color-wrap">
+            <span class="color-dot" id="bgColorDot" style="background:#2a2a2e" onclick="document.getElementById('bgColorPick').click()"></span>
+            <input type="color" id="bgColorPick" value="#2a2a2e" class="hidden-pick" />
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. View Mode -->
+      <section class="sec">
+        <label class="sec-title">화면 뷰</label>
+        <div class="toggle-group">
+          <button class="tog active" id="togFull" data-mode="full">풀 스크립트</button>
+          <button class="tog" id="togShort" data-mode="short">숏 스크립트</button>
+        </div>
+      </section>
+
+            <!-- 폰트 -->
+      <section class="sec">
+        <label class="sec-title">폰트</label>
+        <div class="toggle-group">
+          <button class="tog active" id="fontSerif">Serif</button>
+          <button class="tog" id="fontSans">Sans</button>
+        </div>
+      </section>
+
+      <!-- 3-1: Full Script Mode -->
+      <section class="sec" id="fullMode">
+        <label class="sec-title">대사</label>
+        <div class="char-list" id="charList"></div>
+        <div class="add-btns">
+          <button class="add-btn" id="addChar">＋ 인물 추가</button>
+          <button class="add-btn" id="addMono">＋ 독백 추가</button>
+        </div>
+        <button class="sort-btn" id="sortToggle">⇅ 순서 변경</button>
+        <div class="pos-row" id="posRow">
+          <button class="sort-btn" id="posToggle">↕ 위치 이동</button>
+          <div class="pos-slider-wrap" id="posSliderWrap" style="display:none">
+            <input type="range" class="pos-slider" id="posSlider" min="-300" max="600" value="0" step="2" />
+            <span class="pos-val" id="posVal">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3-2: Short Script Mode -->
+      <section class="sec" id="shortMode" style="display:none">
+        <label class="sec-title">대사</label>
+        <div class="short-block">
+          <div class="char-row">
+            <div class="name-wrap">
+              <div class="color-wrap">
+                <span class="color-dot" id="shortColorDot" style="background:#e8a0b4" onclick="document.getElementById('shortColorPick').click()"></span>
+                <input type="color" id="shortColorPick" value="#e8a0b4" class="hidden-pick" />
+              </div>
+              <input type="text" class="name-inp" id="shortName" value="인물1" />
+              <label class="deco-check">
+                <input type="checkbox" id="shortDecoChk" />
+                <span class="deco-label">이름 꾸밈</span>
+              </label>
+              <input type="text" class="name-inp deco-inp" id="shortDecoInp" placeholder="" style="display:none" />
+            </div>
+          </div>
+          <textarea class="dia-area" id="shortDia" rows="3">대사를 입력해 주세요.</textarea>
+          <!-- Text color + Box bg color: inline with name-wrap style -->
+          <div class="name-wrap" style="margin-top:2px">
+            <span class="deco-label">대사 색상</span>
+            <div class="color-wrap">
+              <span class="color-dot" id="shortTextColorDot" style="background:#313030" onclick="document.getElementById('shortTextColorPick').click()"></span>
+              <input type="color" id="shortTextColorPick" value="#313030" class="hidden-pick" />
+            </div>
+            <span class="deco-label" style="margin-left:8px">박스 배경</span>
+            <div class="color-wrap">
+              <span class="color-dot" id="shortBoxColorDot" style="background:#ffffff" onclick="document.getElementById('shortBoxColorPick').click()"></span>
+              <input type="color" id="shortBoxColorPick" value="#ffffff" class="hidden-pick" />
+            </div>
+            <input type="range" class="pos-slider" id="shortBoxOpacity" min="0" max="100" value="65" step="1" style="flex:1;min-width:50px" />
+            <span class="pos-val" id="shortBoxOpacityVal">65%</span>
+          </div>
+        </div>
+        <div class="pos-row">
+          <button class="sort-btn" id="shortPosToggle">↕ 위치 이동</button>
+          <div class="pos-slider-wrap" id="shortPosSliderWrap" style="display:none">
+            <input type="range" class="pos-slider" id="shortPosSlider" min="-300" max="600" value="160" step="2" />
+            <span class="pos-val" id="shortPosVal">160</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 배경 오버레이 (공통) -->
+      <section class="sec">
+        <label class="sec-title">배경 오버레이</label>
+        <div class="pos-slider-wrap">
+          <input type="range" class="pos-slider" id="overlaySlider" min="0" max="100" value="45" step="1" />
+          <span class="pos-val" id="overlayVal">45%</span>
+        </div>
+      </section>
+
+            <!-- 기타 옵션 -->
+      <section class="sec">
+        <label class="sec-title">기타 옵션</label>
+        <div class="name-wrap">
+          <label class="deco-check">
+            <input type="checkbox" id="borderToggle" />
+            <span class="deco-label">배경 여백 추가</span>
+          </label>
+        </div>
+        <div id="borderOptions" style="display:none; flex-direction:column; gap:8px;">
+          <div class="name-wrap">
+            <span class="deco-label">여백 색상</span>
+            <div class="color-wrap">
+              <span class="color-dot" id="borderColorDot" style="background:#ffffff" onclick="document.getElementById('borderColorPick').click()"></span>
+              <input type="color" id="borderColorPick" value="#ffffff" class="hidden-pick" />
+            </div>
+          </div>
+          <div class="pos-slider-wrap">
+            <input type="range" class="pos-slider" id="borderSlider" min="8" max="80" value="8" step="2" />
+            <span class="pos-val" id="borderVal">8px</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Save -->
+        <button class="save-btn" id="saveBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          이미지 저장
+        </button>
+      </section>
+
+    </div>
+  </aside>
+
+  <!-- Right: Preview Panel -->
+  <main class="preview-wrap">
+    <div class="preview" id="preview">
+      <img class="preview-bg" id="previewBg" alt="" style="display:none" />
+      <div class="preview-overlay" id="previewOverlay"></div>
+      <div class="preview-content" id="previewContent"></div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.10.27/interact.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="app.js"></script>
+    <div class="save-overlay" id="saveOverlay">
+    <div class="save-loading">
+      <div class="save-spinner"></div>
+      <span class="save-loading-text">저장 중...</span>
+    </div>
+  </div>
+</body>
+</html>
