@@ -365,6 +365,7 @@ textarea { resize: vertical; }
   position: relative;
   box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.08);
   flex-shrink: 0;
+  touch-action: none;
 }
 .preview-bg {
   position: absolute;
@@ -376,6 +377,7 @@ textarea { resize: vertical; }
   -webkit-user-drag: none;
   transform-origin: center center;
   z-index: 0;
+  touch-action: none; /* 추가 */
 }
 .preview-overlay {
   position: absolute;
