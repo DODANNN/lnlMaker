@@ -640,14 +640,13 @@ function applyBgTransform() {
 }
 
 interact(previewBg)
-.draggable({
+  .draggable({
     ignoreFrom: 'input, textarea, button, select',
-    inertia: true,
     listeners: {
       move(e) { bgX += e.dx; bgY += e.dy; applyBgTransform(); }
     }
   })
- .gesturable({
+  .gesturable({
     ignoreFrom: 'input, textarea, button, select',
     listeners: {
       move(e) {
