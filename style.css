@@ -438,7 +438,7 @@ textarea { resize: vertical; }
 .pv-block.right .pv-name-line { background: linear-gradient(to left, rgba(255,255,255,0.5), transparent); }
 .pv-text {
   font-family: var(--cur-font, var(--font-serif));;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   line-height: 1.75;
   color: rgba(255,255,255,0.92);
   word-break: keep-all;
@@ -446,7 +446,7 @@ textarea { resize: vertical; }
 }
 .pv-mono {
   font-family: var(--cur-font, var(--font-serif));;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   line-height: 1.75;
   color: rgba(255,255,255,0.65);
   text-shadow: 0 1px 5px rgba(0,0,0,0.7);
@@ -485,7 +485,7 @@ textarea { resize: vertical; }
 }
 .pv-short-text {
   font-family: var(--cur-font, var(--font-serif));;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.85;
   color: rgba(255,255,255,0.9);
   word-break: keep-all;
