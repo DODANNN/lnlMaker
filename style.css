@@ -376,6 +376,7 @@ textarea { resize: vertical; }
   -webkit-user-drag: none;
   transform-origin: center center;
   z-index: 0;
+  touch-action: none;
 }
 .preview-overlay {
   position: absolute;
