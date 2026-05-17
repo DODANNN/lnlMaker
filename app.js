@@ -233,6 +233,11 @@ function addCharEntry(type, align = 'left') {
     italic: false
   };
 
+  state.chars.push(entry);              // state에 추가
+  charList.appendChild(buildBlock(entry)); // DOM에 추가
+  updatePreview();
+}      
+
 function buildBlock(entry) {
   const div = document.createElement('div');
   div.className = 'char-block' + (entry.type === 'mono' ? ' mono' : '');
