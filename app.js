@@ -219,22 +219,19 @@ shortPosSlider.addEventListener('input', () => {
 shortPosSlider.addEventListener('mousedown', e => e.stopPropagation());
 shortPosSlider.addEventListener('touchstart', e => e.stopPropagation(), { passive: true });
 
-function addCharEntry(type) {
+function addCharEntry(type, align = 'left') {
   const entry = {
     id: genId(),
     type,
     name: type === 'char' ? `인물${charList.querySelectorAll('.char-block').length + 1}` : '',
     deco: false,
     decoName: '',
+    decoX: 0,
     color: '#e8a0b4',
     text: '대사를 입력해 주세요.',
-    align: 'left',
+    align,
     italic: false
   };
-  state.chars.push(entry);
-  charList.appendChild(buildBlock(entry));
-  updatePreview();
-}
 
 function buildBlock(entry) {
   const div = document.createElement('div');
