@@ -75,7 +75,7 @@ fontSansBtn.addEventListener('click', () => {
 
 /* ========== INIT ========== */
 addCharEntry('char');
-addCharEntry('char');
+addCharEntry('char', 'right');
 updatePreview();
 
 /* ========== BACKGROUND ========== */
@@ -799,3 +799,7 @@ noticeClose.addEventListener('click', closeNotice);
 noticeConfirm.addEventListener('click', closeNotice);
 noticeBackdrop.addEventListener('click', closeNotice);
 helpBtn.addEventListener('click', openNotice);
+$('bgColorPick').addEventListener('input', e => {
+  document.querySelector('.preview').style.background = e.target.value;
+  $('bgColorDot').style.background = e.target.value;
+});
